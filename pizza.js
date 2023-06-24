@@ -9,28 +9,26 @@ const recipe = {
   oil: 6, // 1 pack?
 };
 
-function isInt(value) {
-  return (
-    !isNaN(value) &&
-    parseInt(Number(value)) == value &&
-    !isNaN(parseInt(value, 10))
-  );
+function round(n) {
+  return parseFloat(n.toFixed(2));
 }
 
 function calc_recipe() {
-  let portions = window.location.hash.substring(1);
-  if (!isInt(portions)) {
+  const params = new URLSearchParams(document.location.search);;
+
+  let portions = parseFloat(params.get("portions"));
+  if (Number.isNaN(portions)) {
     portions = 2;
   }
   document.querySelectorAll(".portions").forEach(function (elem, index) {
-    elem.textContent = portions;
+    elem.textContent = round(portions);
   });
-  document.getElementById("c_flour").textContent = recipe["flour"] * portions;
-  document.getElementById("c_water").textContent = recipe["water"] * portions;
-  document.getElementById("c_salt").textContent = recipe["salt"] * portions;
-  document.getElementById("c_sugar").textContent = recipe["sugar"] * portions;
-  document.getElementById("c_yeast").textContent = recipe["yeast"] * portions;
-  document.getElementById("c_oil").textContent = recipe["oil"] * portions; //TODO this doesnt have to scale as high, 30 is fine for 4p
+  document.getElementById("c_water").textContent = round(recipe["water"] * portions);
+  document.getElementById("c_flour").textContent = round(recipe["flour"] * portions);
+  document.getElementById("c_salt").textContent = round(recipe["salt"] * portions);
+  document.getElementById("c_sugar").textContent = round(recipe["sugar"] * portions);
+  document.getElementById("c_yeast").textContent = round(recipe["yeast"] * portions);
+  document.getElementById("c_oil").textContent = round(recipe["oil"] * portions); //TODO this doesnt have to scale as high, 30 is fine for 4p
 }
 
 window.addEventListener("DOMContentLoaded", (_) => calc_recipe());
