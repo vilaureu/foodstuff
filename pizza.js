@@ -23,6 +23,7 @@ function calc_recipe() {
   document.querySelectorAll(".portions").forEach(function (elem, index) {
     elem.textContent = round(portions);
   });
+  document.getElementById("input_portions").value = round(portions);
   document.getElementById("c_water").textContent = round(recipe["water"] * portions);
   document.getElementById("c_flour").textContent = round(recipe["flour"] * portions);
   document.getElementById("c_salt").textContent = round(recipe["salt"] * portions);
